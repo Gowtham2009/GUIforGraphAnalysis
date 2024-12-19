@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 
 # File path
-file_path = "C:/Users/Gowth/Desktop/Capstone Project Torpedo/Hex_Files_Converted_decimal/Control_output_float_with_timestamps.csv"
+file_path = "C:/Users/vardhansans/Documents/College/CapstoneProject/GUIforTorpedoAnalysis/Hex_Files_Converted_decimal/Control_output_float_with_timestamps.csv"
 
 # Reading the CSV file
 df = pd.read_csv(file_path)
