@@ -17,25 +17,25 @@ df['Value1'] = pd.to_numeric(df['Value1'], errors='coerce')
 # Filter the data to start from the first positive value in the 'Time' column
 df_filtered = df[df['Time'] >= 0].reset_index(drop=True)
 
-# Create the scatter plot with Plotly
-fig = px.scatter(
+# Create the line plot with Plotly
+fig = px.line(
     df_filtered,
     x='Time',
     y='Value1',
-    title="Interactive Scatter Plot of Time vs Value1",
+    title="Interactive Line Plot of Time vs Value1",
     labels={"Time": "Time (seconds)", "Value1": "Value1"},
     template="plotly_white",
 )
 
-# Customize the markers
-fig.update_traces(marker=dict(symbol='cross', size=6, color='blue'))
+# Customize the line appearance
+fig.update_traces(line=dict(color='blue', width=2))
 
-# Add finer gridlines
+# Add finer gridlines and set the x-axis tick interval to 0.2 seconds
 fig.update_layout(
     xaxis=dict(
         tickmode='linear',
         tick0=0,
-        dtick=10,  # Set x-axis tick intervals to 10
+        dtick=0.2,  # Set x-axis tick intervals to 0.2 seconds
         gridcolor='lightgray',
         gridwidth=0.5,
     ),
@@ -48,11 +48,12 @@ fig.update_layout(
     width=1200,  # Set the initial width of the plot
     height=600,  # Set the initial height of the plot
 )
+
 # Save the plot as an HTML file
-fig.write_html("interactive_scatter_plot.html")
+fig.write_html("interactive_line_plot.html")
 
 # Output message to locate the file
-print("Plot saved as 'interactive_scatter_plot.html'. Open this file in your browser.")
+print("Plot saved as 'interactive_line_plot.html'. Open this file in your browser.")
 
 # Show the interactive plot
 fig.show()
