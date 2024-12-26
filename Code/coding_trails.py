@@ -42,3 +42,4 @@ fig = px.line(plot_data, x='X', y='Y', title="Interactive CSV Data Plot (Positiv
 
 # Save the graph as an HTML file and open it
 plot(fig, filename='interactive_positive_plot.html', auto_open=True)
+a

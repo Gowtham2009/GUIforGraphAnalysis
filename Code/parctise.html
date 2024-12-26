@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Chart with Zoom and Pan</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+    <h2>Upload CSV and Plot Data with Zoom and Pan</h2>
+    <input type="file" id="fileInput" accept=".csv" />
+    <canvas id="myChart" width="800" height="400"></canvas>
+
+    <script>
+        // Chart.js configuration and initialization
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [], // X-axis labels
+                datasets: [{
+                    label: 'CSV Data',
+                    data: [], // Y-axis values
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    fill: true,
+                    tension: 0.4 // Smooth curves
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Value: ${context.raw}`;
+                            }
+                        }
+                    },
+                    zoom: {
+                        zoom: {
+                            wheel: {
+                                enabled: true // Enable zooming with the mouse wheel
+                            },
+                            pinch: {
+                                enabled: true // Enable pinch zooming for touch devices
+                            },
+                            mode: 'x', // Zoom along the x-axis
+                        },
+                        pan: {
+                            enabled: true, // Enable panning
+                            mode: 'x', // Pan along the x-axis
+                            threshold: 10, // Minimum distance to trigger panning
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Column 0 (Filtered Positive Values)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Column 1'
+                        }
+                    }
+                }
+            }
+        });
+
+        // CSV file upload and parsing
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                Papa.parse(file, {
+                    header: false, // CSV does not have a header row
+                    skipEmptyLines: true,
+                    complete: function(results) {
+                        const data = results.data;
+
+                        // Filter data to include only rows where 0th column > 0
+                        const filteredData = data.filter(row => parseFloat(row[0]) > 0);
+
+                        // Extract X (0th column) and Y (1st column)
+                        const labels = filteredData.map(row => parseFloat(row[0]));
+                        const values = filteredData.map(row => parseFloat(row[1]));
+
+                        // Update the Chart.js data
+                        myChart.data.labels = labels;
+                        myChart.data.datasets[0].data = values;
+                        myChart.update(); // Re-render the chart
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
