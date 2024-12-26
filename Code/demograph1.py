@@ -57,8 +57,8 @@ p.sizing_mode = "stretch_both"  # Make the plot responsive to window size
 
 # Add smooth zooming
 zoom_tool = p.select_one(WheelZoomTool)
-zoom_tool.zoom_on_axis = False  # Zoom uniformly on both axes
-zoom_tool.speed = 0.1  # Slow down zoom speed for better control
+zoom_tool.zoom_on_axis = True  # Zoom uniformly on both axes
+zoom_tool.speed = 0.01  # Slow down zoom speed for better control
 
 # Save and display the plot
 output_file("interactive_positive_plot.html")
