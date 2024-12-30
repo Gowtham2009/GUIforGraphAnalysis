@@ -128,7 +128,7 @@ p.line(
 p.circle(
     x=positive_data.iloc[:, 0],
     y=positive_data.iloc[:, 1],
-    size=8,  # Slightly larger points
+    size=4,  # Slightly larger points
     color="red",
     legend_label="Points"
 )
