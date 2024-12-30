@@ -64,21 +64,6 @@
 # output_file("interactive_positive_plot.html")
 # show(p)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import WheelZoomTool, ResetTool
 import pandas as pd
