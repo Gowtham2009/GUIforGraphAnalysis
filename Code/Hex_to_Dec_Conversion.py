@@ -21,8 +21,10 @@ def hex_to_decimal(hex_str):
     return -decimal_value if is_negative else decimal_value
 
 # Input and output file paths
-input_file_path = r"C:\Users\Gowth\Desktop\Capstone Project Torpedo\Hex Files\MCC_Data.hex"
-output_file_path = r"C:\Users\Gowth\Downloads\MCC_output_float_with_timestamps.csv"
+input_file_path = r"C:\Users\vaish\Downloads\TEST-DATA (4)\TEST-DATA\control.hex"
+output_file_path = r"C:\Users\vaish\Downloads\NEWDATA\control_output_float_with_timestamps.csv"
+
+
 
 # Read the hex file and convert to decimal, storing in a list of lists
 data = []

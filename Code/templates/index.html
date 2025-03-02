@@ -1,0 +1,129 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV File Comparison</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>CSV File Comparison Tool</h1>
+
+        <div class="upload-section">
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <input type="file" name="files[]" multiple accept=".csv">
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+
+        {% if files_data %}
+            <div class="files-section">
+                <h2>Uploaded Files</h2>
+                <button onclick="clearAllFiles()">Clear All Files</button>
+                <form method="POST" target="_blank" action="/graph" onsubmit="openGraphTab()">
+                    <label>Select Column (1 - {{ max_columns }}):</label>
+                    <input type="number" name="column" min="1" max="{{ max_columns }}" value="{{ global_column + 1 }}" required>
+                    <input type="hidden" name="update_all_columns" value="true">
+                    <button type="submit">View Graph</button>
+                </form>
+
+                <ul>
+                    {% for file in files_data %}
+                        <li>
+                            {{ file.name }}
+                            <form method="POST">
+                                <input type="hidden" name="remove_file" value="{{ file.name }}">
+                                <button type="submit">Remove</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function clearAllFiles() {
+            if (confirm("Are you sure you want to clear all files?")) {
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.innerHTML = '<input type="hidden" name="clear_all" value="true">';
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        function openGraphTab() {
+            window.open('/graph', '_blank');
+        }
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV File Comparison</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>CSV File Comparison Tool</h1>
+
+        <div class="upload-section">
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <input type="file" name="files[]" multiple accept=".csv">
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+
+        {% if files_data %}
+            <div class="files-section">
+                <h2>Uploaded Files</h2>
+                <button onclick="clearAllFiles()">Clear All Files</button>
+
+                <ul>
+                    {% for file in files_data %}
+                        <li>
+                            {{ file.name }}
+                            <form method="POST">
+                                <input type="hidden" name="remove_file" value="{{ file.name }}">
+                                <button type="submit">Remove</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <form action="{{ url_for('graph') }}" method="POST" target="_blank">
+                    <label>Select Column (1 - {{ max_columns }}):</label>
+                    <input type="number" name="column" min="1" max="{{ max_columns }}" value="{{ global_column + 1 }}" required>
+                    <button type="submit">View Graph</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function clearAllFiles() {
+            if (confirm("Are you sure you want to clear all files?")) {
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.innerHTML = '<input type="hidden" name="clear_all" value="true">';
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+</body>
+</html>
+
